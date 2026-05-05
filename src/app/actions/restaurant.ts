@@ -19,6 +19,8 @@ export async function submitRestaurant(formData: FormData) {
   const parkingTwoWheeler = formData.get("parkingTwoWheeler") === "on";
   const parkingFourWheeler = formData.get("parkingFourWheeler") === "on";
   const isVeg = formData.get("isVeg") === "veg";
+  const latitude = formData.get("latitude") ? parseFloat(formData.get("latitude") as string) : null;
+  const longitude = formData.get("longitude") ? parseFloat(formData.get("longitude") as string) : null;
 
   if (!name || !cuisine || !address || !locationArea || !description || !priceLevel) {
     throw new Error("Missing required fields");
@@ -30,6 +32,7 @@ export async function submitRestaurant(formData: FormData) {
       imageUrl: imageUrl || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=800&auto=format&fit=crop",
       capacity, minPrice, maxPrice, openingTime, closingTime,
       parkingTwoWheeler, parkingFourWheeler, isVeg,
+      latitude, longitude,
       status: "PENDING",
     },
   });

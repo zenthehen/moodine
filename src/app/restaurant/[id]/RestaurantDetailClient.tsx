@@ -198,7 +198,12 @@ export default function RestaurantDetailClient({
           {/* Map Section */}
           <div className="pt-4 border-t border-rust/10 mt-6 mb-6">
             <h3 className="font-cormorant text-xl font-semibold text-ink mb-4">Location</h3>
-            <RestaurantMap name={restaurant.name} address={restaurant.address} lat={27.7172 + (Math.random() * 0.01)} lng={85.3240 + (Math.random() * 0.01)} />
+            <RestaurantMap 
+              name={restaurant.name} 
+              address={restaurant.address} 
+              lat={restaurant.latitude ?? (27.7172 + (Math.random() * 0.01))} 
+              lng={restaurant.longitude ?? (85.3240 + (Math.random() * 0.01))} 
+            />
           </div>
 
 

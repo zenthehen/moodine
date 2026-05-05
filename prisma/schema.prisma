@@ -59,6 +59,8 @@ model Restaurant {
 
   createdAt      DateTime @default(now())
   approvedAt     DateTime?
+  latitude       Float?
+  longitude      Float?
   reviews        Review[]
 }
 

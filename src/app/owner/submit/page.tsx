@@ -122,7 +122,17 @@ export default function OwnerSubmitPage() {
             </div>
           </div>
 
-          {/* Section 5 — Media & Description */}
+          {/* Section 5 — Map Coordinates */}
+          <div>
+            <h2 className="font-cormorant text-2xl font-semibold text-ink mb-6 pb-3 border-b border-rust/10">Map Coordinates</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <FormInput label="Latitude" name="latitude" type="number" step="any" placeholder="e.g. 27.7172" />
+              <FormInput label="Longitude" name="longitude" type="number" step="any" placeholder="e.g. 85.3240" />
+            </div>
+            <p className="mt-2 text-xs text-sage italic">Tip: You can find these by right-clicking any location on Google Maps.</p>
+          </div>
+
+          {/* Section 6 — Media & Description */}
           <div>
             <h2 className="font-cormorant text-2xl font-semibold text-ink mb-6 pb-3 border-b border-rust/10">Photos & Description</h2>
             <div className="space-y-6">
@@ -143,16 +153,16 @@ export default function OwnerSubmitPage() {
   );
 }
 
-function FormInput({ label, name, type = "text", placeholder, required, icon, className, defaultValue }: {
+function FormInput({ label, name, type = "text", placeholder, required, icon, className, defaultValue, step }: {
   label: string; name: string; type?: string; placeholder?: string;
-  required?: boolean; icon?: React.ReactNode; className?: string; defaultValue?: string;
+  required?: boolean; icon?: React.ReactNode; className?: string; defaultValue?: string; step?: string;
 }) {
   return (
     <div className={`space-y-2 ${className ?? ""}`}>
       <label className="text-xs font-semibold text-ink font-dm-mono uppercase tracking-wide">{label}</label>
       <div className="relative">
         {icon && <span className="absolute left-3 top-3.5 w-4 h-4 text-sage/50 [&>svg]:w-4 [&>svg]:h-4">{icon}</span>}
-        <input required={required} name={name} type={type} placeholder={placeholder} defaultValue={defaultValue}
+        <input required={required} name={name} type={type} placeholder={placeholder} defaultValue={defaultValue} step={step}
           className={`w-full ${icon ? "pl-10" : "px-4"} pr-4 py-3 rounded-xl border border-rust/20 bg-[#FAF7F2] focus:outline-none focus:ring-2 focus:ring-gold/50 transition-all`} />
       </div>
     </div>
