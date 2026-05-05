@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           String       @id @default(uuid())
+  name         String
+  email        String       @unique
+  passwordHash String
+  role         String       @default("USER") // ADMIN, OWNER, USER
+  createdAt    DateTime     @default(now())
+  restaurants  Restaurant[]
+  reviews      Review[]
+}
+
+model Restaurant {
+  id             String   @id @default(uuid())
+  ownerId        String?
+  owner          User?    @relation(fields: [ownerId], references: [id])
+  name           String
+  cuisine        String
+  address        String
+  locationArea   String
+  capacity       Int?
+  priceLevel     String   // $, $$, $$$, $$$$
+  minPrice       Int?     // Min menu price in NPR
+  maxPrice       Int?     // Max menu price in NPR
+  description    String
+  imageUrl       String?
+  status         String   @default("PENDING") // PENDING, LIVE, REJECTED, BLACKLISTED
+
+  // Amenities
+  parkingTwoWheeler   Boolean @default(false)
+  parkingThreeWheeler Boolean @default(false)
+  parkingFourWheeler  Boolean @default(false)
+  isVeg               Boolean @default(false) // true = full veg, false = mixed
+  openingTime         String  @default("10:00")
+  closingTime         String  @default("22:00")
+
+  // Vibe Dimensions (1-10)
+  vibeIntimacy   Int      @default(5)
+  vibeEnergy     Int      @default(5)
+  vibeFormality  Int      @default(5)
+  vibeNoise      Int      @default(5)
+  vibeOutdoorsy  Int      @default(5)
+
+  // Features & Ratings
+  isFeatured     Boolean  @default(false)
+  averageRating  Float    @default(0.0)
+  reviewCount    Int      @default(0)
+
+  createdAt      DateTime @default(now())
+  approvedAt     DateTime?
+  reviews        Review[]
+}
+
+model Review {
+  id           String     @id @default(uuid())
+  rating       Int
+  comment      String
+  userId       String
+  user         User       @relation(fields: [userId], references: [id])
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  createdAt    DateTime   @default(now())
+}
